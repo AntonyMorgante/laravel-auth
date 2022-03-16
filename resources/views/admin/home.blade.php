@@ -15,6 +15,10 @@
                     @endif
 
                     Benvenuto {{ Auth::user()->name}}!
+                    <hr>
+                    <div>
+                        <button type="button" class="btn btn-primary"><a class="text-white text-decoration-none" href="{{route('admin.posts.index')}}">Visualizza i tuoi post</a></button>
+                    </div>
                 </div>
             </div>
         </div>
