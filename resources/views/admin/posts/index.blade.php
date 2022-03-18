@@ -2,13 +2,45 @@
 
 @section('content')
     <div class="container">
-        @foreach($posts as $post)
-            <div class="post py-4">
-                <h2 class="text-center">{{$post['title']}}</h2>
-                <p>{{$post['content']}}</p>
-            </div>
-            <a href="{{route('admin.posts.show',$post->id)}}">Vedi questo post</a>
-        @endforeach
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titolo</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Anteprima</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @php
+                    $i=1;
+                @endphp
+                @foreach($posts as $post)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$post->title}}</td>
+                        <td class="text-center">{{$post->cathegoryName()}}</td>
+                        <td class="text-truncate px-4" style="max-width: 450px;">{{$post['content']}}</td>
+                        <td>
+                            <button class="btn btn-primary"><a class="text-decoration-none text-white" href="{{route('admin.posts.show',$post->id)}}">Vai</a></button>
+                            <button class="btn btn-warning"><a class="text-decoration-none text-black" href="{{route('admin.posts.edit',$post->id)}}">Modifica</a></button>
+                            <form action="{{route('admin.posts.destroy', $post->id)}}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo post?')">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" class="btn btn-danger">Elimina</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button class="btn btn-success"><a class="text-decoration-none text-white" href="{{route('admin.posts.create')}}">Crea un nuovo post</a></button>
+        </div>
     </div>
-    <a href="{{route('admin.posts.create')}}">Crea un nuovo post</a>
 @endsection

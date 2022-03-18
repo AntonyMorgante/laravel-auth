@@ -46,7 +46,9 @@ class PostController extends Controller
         $form_data=$request->all();
 
         $post = new Post();   
-        
+        $user_id = $request->user()['id'];
+        $form_data['user_id'] = $user_id;
+
         //slug
         $slugTitle= Str::slug($form_data['title']);
         $count = 2;

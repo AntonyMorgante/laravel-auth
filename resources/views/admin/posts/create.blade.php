@@ -12,6 +12,12 @@
                 <label for="content">Contenuto</label>
                 <textarea name="content" id="content" cols="30" rows="10"></textarea>
             </div>
+            <select class="form-group" aria-label="Default select example" name="cathegory_id" id="cathegory_id">
+                <option selected>Seleziona la categoria</option>
+                @for ($i=0; $i < $post->totalCathegories(); $i++)
+                    <option value="{{$i+1}}">Categoria {{$i+1}}</option>
+                @endfor
+            </select>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Pubblica</button>
             </div>
