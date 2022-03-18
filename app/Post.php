@@ -13,14 +13,8 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function cathegoryName(){
-        $cathegory_id = $this->cathegory_id;
-        $cathegory = Cathegory::all()->where('id','=',$cathegory_id)->first();
-        $name = $cathegory->name;
-        return $name;
+    public function cathegory(){
+        return $this->belongsTo('App\Cathegory');
     }
 
-    public function totalCathegories(){
-        return Cathegory::all()->count();
-    }
 }

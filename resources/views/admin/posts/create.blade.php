@@ -14,9 +14,9 @@
             </div>
             <select class="form-group" aria-label="Default select example" name="cathegory_id" id="cathegory_id">
                 <option selected>Seleziona la categoria</option>
-                @for ($i=0; $i < $post->totalCathegories(); $i++)
-                    <option value="{{$i+1}}">Categoria {{$i+1}}</option>
-                @endfor
+                @foreach ($cathegories as $cathegory)
+                    <option value="{{$cathegory->id}}">{{$cathegory->name}}</option>                    
+                @endforeach
             </select>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Pubblica</button>

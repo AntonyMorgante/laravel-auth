@@ -9,6 +9,7 @@
                 <th scope="col">Titolo</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Anteprima</th>
+                <th scope="col">Slug</th>
                 <th scope="col"></th>
                 </tr>
             </thead>
@@ -21,8 +22,9 @@
                     <tr>
                         <th scope="row">{{$i}}</th>
                         <td>{{$post->title}}</td>
-                        <td class="text-center">{{$post->cathegoryName()}}</td>
+                        <td class="text-center">{{$post->cathegory->name}}</td>
                         <td class="text-truncate px-4" style="max-width: 450px;">{{$post['content']}}</td>
+                        <td class="text-center">{{$post->slug}}</td>
                         <td>
                             <button class="btn btn-primary"><a class="text-decoration-none text-white" href="{{route('admin.posts.show',$post->id)}}">Vai</a></button>
                             <button class="btn btn-warning"><a class="text-decoration-none text-black" href="{{route('admin.posts.edit',$post->id)}}">Modifica</a></button>

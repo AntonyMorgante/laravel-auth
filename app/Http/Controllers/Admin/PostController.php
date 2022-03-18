@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
+use App\Cathegory;
 
 class PostController extends Controller
 {
@@ -27,7 +28,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $cathegories = Cathegory::all();
+        return view('admin.posts.create',compact('cathegories'));
     }
 
     /**
@@ -40,13 +42,14 @@ class PostController extends Controller
     {
         $request->validate([
             'title'=>'required|string|max:100',
-            'content'=>'required'
+            'content'=>'required',
+            'cathegory_id' => 'nullable'
         ]);
 
         $form_data=$request->all();
 
         $post = new Post();   
-        $user_id = $request->user()['id'];
+        $user_id = $request->user()->id;
         $form_data['user_id'] = $user_id;
 
         //slug
@@ -85,7 +88,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit',compact('post'));
+        $cathegories = Cathegory::all();
+        return view('admin.posts.edit',compact('post','cathegories'));
     }
 
     /**
@@ -97,15 +101,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $user_id = $request->user()->id;
+        $request['user_id'] = $user_id;
         $request->validate([
             'title'=>'required|string|max:100',
-            'content'=>'required'
+            'content'=>'required',
+            'user_id' => 'required',
+            'cathegory_id' => 'nullable'
         ]);
 
         $form_data=$request->all();
         
-        //slug
-        if($form_data['title'] == $post->title){
+        //slug 
+        if(!($form_data['title'] == $post->title)){
             $count = 2;
             $slugTitle= Str::slug($form_data['title']);
             while(Post::where('slug',$slugTitle)->first()){

@@ -7,17 +7,18 @@
             @METHOD("PUT")
             <div class="form-group">
                 <label for="title">Titolo</label>
-                <input type="text" name="title" id="title" placeholder="{{old('title')??$post->title}}">
+                <input type="text" name="title" id="title"  value="{{old('title')??$post->title}}">
             </div>
             <div class="form-group">
                 <label for="content">Contenuto</label>
-                <textarea name="content" id="content" cols="30" rows="10" placeholder="{{old('content')??$post->content}}"></textarea>
+                <textarea name="content" id="content" cols="30" rows="10">{{old('content')??$post->content}}</textarea>
             </div>
             <select class="form-group" aria-label="Default select example" name="cathegory_id" id="cathegory_id">
-                <option selected>Seleziona la categoria</option>
-                @for ($i=0; $i < $post->totalCathegories(); $i++)
-                    <option value="{{$i+1}}">Categoria {{$i+1}}</option>
-                @endfor
+                @foreach ($cathegories as $cathegory)
+                    <option value="{{$cathegory->id}}" {{($cathegory->id == $post->cathegory_id)? 'selected' : ''}}>
+                        {{$cathegory->name}}
+                    </option>                    
+                @endforeach
             </select>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Pubblica</button>
